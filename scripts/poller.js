@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import Database from 'better-sqlite3';
 
+const API_BASE = 'https://twitterapi.io/api/v2';
+
 const TOKEN = process.env.TWITTER_BEARER_TOKEN;
 if (!TOKEN) {
   console.error('TWITTER_BEARER_TOKEN missing');
@@ -56,7 +58,7 @@ async function poll() {
   for (const id of BELLWETHER_IDS) {
     const source = `user:${id}`;
     const since = getSinceId(source);
-    const url = new URL(`https://api.twitter.com/2/users/${id}/tweets`);
+    const url = new URL(`/users/${id}/tweets`, API_BASE);
     url.searchParams.set('exclude', 'retweets,replies');
     if (since) url.searchParams.set('since_id', since);
     const data = await fetchJSON(url.toString());
@@ -70,7 +72,7 @@ async function poll() {
   if (CORE_LIST_ID) {
     const source = `list:${CORE_LIST_ID}`;
     const since = getSinceId(source);
-    const url = new URL(`https://api.twitter.com/2/lists/${CORE_LIST_ID}/tweets`);
+    const url = new URL(`/lists/${CORE_LIST_ID}/tweets`, API_BASE);
     url.searchParams.set('max_results', '100');
     if (since) url.searchParams.set('since_id', since);
     const data = await fetchJSON(url.toString());
