@@ -42,3 +42,13 @@ To learn more about Vercel AI SDK or Next.js take a look at the following resour
 - [Vercel AI SDK docs](https://sdk.vercel.ai/docs)
 - [Vercel AI Playground](https://play.vercel.ai)
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+
+## Twitter polling worker
+
+This repo includes a polling script to fetch tweets from lists or users. Create a `.env` file based on `.env.example` and run:
+
+```bash
+npm run poll
+```
+
+Tweets are stored in a local SQLite database configured by `DB_PATH`.
